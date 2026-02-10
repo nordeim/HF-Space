@@ -1,0 +1,57 @@
+# Ignore everything by default
+*
+
+# Allow only necessary files
+!README.md
+!Dockerfile
+!docker-entrypoint.sh
+!requirements.txt
+!package.json
+!package-lock.json
+!pnpm-lock.yaml
+!pyproject.toml
+!poetry.lock
+
+# Application source code
+!/src
+!/app
+!/lib
+!/public
+!/static
+
+# Configuration files
+!*.py
+!*.js
+!*.ts
+!*.json
+!*.toml
+!*.yaml
+!*.yml
+
+# Specific files for cron
+!crontab
+
+# Hugging Face Space configuration
+!.gitattributes
+!.gitignore
+
+# Exclude build artifacts and dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+coverage/
+*.log
+.DS_Store
