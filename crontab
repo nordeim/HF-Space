@@ -1,0 +1,5 @@
+# Run every hour
+0 * * * * /usr/bin/python /app/scripts/cleanup.py >> /home/appuser/cron/cron.log 2>&1
+
+# Run at midnight
+0 0 * * * /usr/local/bin/node /app/scripts/backup.js >> /home/appuser/cron/cron.log 2>&1
