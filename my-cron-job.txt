@@ -1,0 +1,2 @@
+# Daily ping at 7am SGT (23:00 UTC)
+0 23 * * * /home/project/openclaw/daily-ping-cron.sh >> /home/project/openclaw/logs/cron.log 2>&1
