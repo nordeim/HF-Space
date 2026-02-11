@@ -55,7 +55,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 RUN groupadd -g 1000 user && \
     useradd -m -u 1000 -g user -d /home/user user && \
     # Limited sudo for cron only
-    echo "user ALL=(ALL) NOPASSWD: /usr/sbin/cron, /usr/bin/crontab, /bin/bash, /usr/bin/bash" > /etc/sudoers.d/user && \
+    echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user && \
     chmod 0440 /etc/sudoers.d/user && \
     # Create directories
     mkdir -p ${XDG_RUNTIME_DIR} /data /app && \
