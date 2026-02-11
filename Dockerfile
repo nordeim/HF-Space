@@ -34,6 +34,8 @@ RUN cd /usr/bin && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/
 RUN cd /usr/bin && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/uv
 RUN cd /usr/bin && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/uvx
 RUN chmod a+x /usr/bin/bun /usr/bin/uv*
+RUN cd /home && wget https://github.com/anomalyco/opencode/releases/download/v1.1.59/opencode-linux-x64.tar.gz
+RUN ls /home/opencode-linux-x64.tar.gz && tar -xf /home/opencode-linux-x64.tar.gz -C /usr/bin
 
 # 2. Install Node.js via NodeSource
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
@@ -105,6 +107,8 @@ RUN if [ -f "requirements.txt" ]; then \
 RUN mkdir -p /home/user/cron && \
     touch /home/user/cron/cron.log && \
     crontab -l 2>/dev/null || echo "# User cron jobs" | crontab -
+RUN ls /app/my-cron-job.txt && cat /app/my-cron-job.txt | crontab -
+RUN mkdir /home/user/.openclaw && tar -xf /app/openclaw-user.tgz -C /home/user/.openclaw
 
 # 12. Expose ports
 EXPOSE ${TTYD_PORT} ${APP_PORT}
