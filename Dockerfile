@@ -15,7 +15,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # 1. Install ALL system dependencies in ONE layer
 RUN apt-get update && apt-get install -y --no-install-recommends \
     # Core utilities
-    bash coreutils ca-certificates cron curl git less procps sudo vim tar wget zip unzip tmux \
+    bash coreutils ca-certificates cron curl git less procps sudo vim tar wget zip unzip tmux openssh-client \
     # Build tools for ttyd
     build-essential cmake pkg-config \
     # ttyd dependencies
