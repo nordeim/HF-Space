@@ -20,7 +20,7 @@ start_ttyd() {
     # Start ttyd with bash, allowing login shell with full environment
     /usr/local/bin/ttyd \
         -p "${TTYD_PORT:-7681}" \
-        -c ":${TTYD_PASSWORD}" \
+        --writable \
         -t fontSize=14 \
         -t fontFamily="'JetBrains Mono', 'Cascadia Code', monospace" \
         -t theme='{"background": "#0a0a0a"}' \
@@ -29,23 +29,13 @@ start_ttyd() {
     echo "ttyd started with PID: ${TTYD_PID}"
 }
 
-# Function to start main application
+# Function to start main application - SIMPLIFIED
 start_app() {
-    echo "Starting main application on port ${APP_PORT:-7860}..."
-    
-    # Check for common application types
-    if [ -f "package.json" ] && grep -q '"start"' package.json; then
-        npm start
-    elif [ -f "main.py" ] || [ -f "app.py" ]; then
-        python -m uvicorn main:app --host 0.0.0.0 --port ${APP_PORT:-7860}
-    elif [ -f "manage.py" ]; then
-        python manage.py runserver 0.0.0.0:${APP_PORT:-7860}
-    elif [ -f "server.js" ] || [ -f "index.js" ]; then
-        node server.js
-    else
-        echo "No application detected. Starting default Python HTTP server..."
-        python -m http.server ${APP_PORT:-7860}
-    fi
+    echo "Starting HTTP server on port ${APP_PORT:-7860}..."
+    # Always start HTTP server (for Hugging Face health check)
+    python -m http.server ${APP_PORT:-7860} --bind 0.0.0.0 > /dev/null 2>&1 &
+    APP_PID=$!
+    echo "HTTP server started with PID: ${APP_PID}"
 }
 
 # Function to handle graceful shutdown
@@ -53,6 +43,7 @@ cleanup() {
     echo "Shutting down services..."
     [ -n "${TTYD_PID}" ] && kill ${TTYD_PID} 2>/dev/null || true
     [ -n "${CRON_PID}" ] && sudo kill ${CRON_PID} 2>/dev/null || true
+    [ -n "${APP_PID}" ] && kill ${APP_PID} 2>/dev/null || true
     exit 0
 }
 
@@ -63,21 +54,20 @@ trap cleanup SIGINT SIGTERM
 case "${1}" in
     "start")
         start_cron
-        start_ttyd
         start_app
+        start_ttyd
         ;;
     "cron-only")
         start_cron
-        # Keep container running
         tail -f /dev/null
         ;;
     "ttyd-only")
         start_ttyd
-        # Keep container running
         tail -f /dev/null
         ;;
     "app-only")
         start_app
+        tail -f /dev/null
         ;;
     *)
         exec "$@"
