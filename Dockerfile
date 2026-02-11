@@ -3,7 +3,7 @@
 # -------------------------------------------------------------------
 # SINGLE STAGE: Simple, reliable build
 # -------------------------------------------------------------------
-FROM python:3.13-slim-trixie
+FROM python:3.13-trixie
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
