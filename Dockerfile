@@ -79,12 +79,16 @@ RUN npx playwright install chromium
 # Then install the system dependencies Playwright needs
 RUN npx playwright install-deps chromium
 
+COPY . /app
+RUN mv /app/bun /app/uv* /usr/bin/
+RUN chown -R user:user /app
+
 # 7. Switch to non-root user
 USER user
 WORKDIR /app
 
 # 8. Copy application code
-COPY --chown=user:user . /app
+#COPY --chown=user:user . /app
 
 # 9. Install project dependencies
 RUN if [ -f "package.json" ]; then \
