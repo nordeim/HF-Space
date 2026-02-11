@@ -68,6 +68,7 @@ RUN npm install -g --omit=dev \
     vite@latest \
     vitest@latest \
     clawhub@latest \
+    openclaw@latest \
     @playwright/mcp@latest \
     agent-browser@latest \
     @anthropic-ai/claude-code@latest
