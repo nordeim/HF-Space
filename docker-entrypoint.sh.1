@@ -17,9 +17,12 @@ start_cron() {
 # Function to start ttyd web terminal
 start_ttyd() {
     echo "Starting ttyd web terminal on port ${TTYD_PORT:-7681}..."
+    # Start ttyd with bash, allowing login shell with full environment
     /usr/local/bin/ttyd \
         -p "${TTYD_PORT:-7681}" \
         --writable \
+        -t fontSize=14 \
+        -t fontFamily="'JetBrains Mono', 'Cascadia Code', monospace" \
         -t theme='{"background": "#0a0a0a"}' \
         bash --login &
     TTYD_PID=$!
