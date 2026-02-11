@@ -67,6 +67,12 @@ RUN groupadd -g 1000 user && \
     mkdir -p ${XDG_RUNTIME_DIR} /data /app && \
     chown -R user:user ${XDG_RUNTIME_DIR} /data /app
 
+RUN mkdir -p /home/project/opencode && chown -R user:user /home/project
+RUN groupadd -g 1001 opencode && useradd -m -u 1001 -g opencode -d /home/opencode opencode
+RUN chmod 777 /home/project/opencode
+RUN cd /home && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/project-openclaw.tgz
+RUN ls /home/project-openclaw.tgz && tar -xf /home/project-openclaw.tgz -C /home/project
+    
 # Install global npm packages
 RUN npm install -g --omit=dev \
     pnpm@latest \
