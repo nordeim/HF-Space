@@ -35,7 +35,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
     apt-get install -y nodejs && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     node --version && npm --version
-
 # 3. Build ttyd
 RUN cd /tmp && \
     git clone --depth 1 --branch 1.7.4 https://github.com/tsl0922/ttyd.git && \
@@ -79,16 +78,12 @@ RUN npx playwright install chromium
 # Then install the system dependencies Playwright needs
 RUN npx playwright install-deps chromium
 
-COPY . /app
-RUN mv /app/bun /app/uv* /usr/bin/
-RUN chown -R user:user /app
-
 # 7. Switch to non-root user
 USER user
 WORKDIR /app
 
 # 8. Copy application code
-#COPY --chown=user:user . /app
+COPY --chown=user:user . /app
 
 # 9. Install project dependencies
 RUN if [ -f "package.json" ]; then \
@@ -112,10 +107,8 @@ EXPOSE ${TTYD_PORT} ${APP_PORT}
 # 13. Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:${TTYD_PORT} || exit 1
-
 # 14. Entrypoint script
 COPY --chown=user:user docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["start"]
