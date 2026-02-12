@@ -34,8 +34,8 @@ RUN cd /usr/bin && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/
 RUN cd /usr/bin && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/uv
 RUN cd /usr/bin && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/uvx
 RUN chmod a+x /usr/bin/bun /usr/bin/uv*
-RUN cd /home && wget https://github.com/anomalyco/opencode/releases/download/v1.1.59/opencode-linux-x64.tar.gz
-RUN ls /home/opencode-linux-x64.tar.gz && tar -xf /home/opencode-linux-x64.tar.gz -C /usr/bin
+RUN wget https://github.com/anomalyco/opencode/releases/download/v1.1.59/opencode-linux-x64.tar.gz -O /home/opencode-linux-x64.tar.gz
+RUN tar -xf /home/opencode-linux-x64.tar.gz -C /usr/bin
 
 # 2. Install Node.js via NodeSource
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
@@ -71,8 +71,8 @@ RUN mkdir -p /home/project/opencode && chown -R user:user /home/project
 RUN groupadd -g 1001 opencode && useradd -m -u 1001 -g opencode -d /home/opencode opencode
 RUN chmod 775 /home/opencode && usermod -aG opencode user
 RUN chmod 777 /home/project/opencode
-RUN cd /home && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/project-openclaw.tgz
-RUN ls /home/project-openclaw.tgz && tar -xf /home/project-openclaw.tgz -C /home/project
+RUN wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/project-openclaw.tgz -O /home/project-openclaw.tgz
+RUN tar -xf /home/project-openclaw.tgz -C /home/project
     
 # Install global npm packages
 RUN npm install -g --omit=dev \
@@ -116,11 +116,13 @@ RUN pip install --no-cache-dir --user beautifulsoup4 charset-normalizer defusedx
 RUN mkdir -p /home/user/cron && \
     touch /home/user/cron/cron.log && \
     crontab -l 2>/dev/null || echo "# User cron jobs" | crontab -
-RUN touch /app/my-cron-job.txt && cat /app/my-cron-job.txt | crontab -
-RUN mkdir /home/user/.openclaw && tar -xf /app/openclaw-user.tgz -C /home/user/.openclaw
+RUN wget https://raw.githubusercontent.com/nordeim/HF-Space/refs/heads/main/my-cron-job.txt -O /app/my-cron-job.txt && cat /app/my-cron-job.txt | crontab -
+RUN mkdir /home/user/.openclaw && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/openclaw-user.tgz -O /app/openclaw-user.tgz && tar -xf /app/openclaw-user.tgz -C /home/user/.openclaw
 RUN mkdir -p /home/user/.bun/install/global && cd /home/user/.bun/install/global && bun install mcporter
-RUN chmod +x /app/brew-install.sh && /app/brew-install.sh
+RUN wget https://raw.githubusercontent.com/nordeim/HF-Space/refs/heads/main/brew-install.sh -O /app/brew-install.sh && chmod +x /app/brew-install.sh && /app/brew-install.sh
 RUN wget https://raw.githubusercontent.com/nordeim/HF-Space/refs/heads/main/profile.txt -O /home/user/.profile
+RUN sudo ln -sf /home/user /home/pete
+RUN mkdir /home/user/.claude && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/claude.tar.xz -O /home/user/claude.tar.xz && tar -xf /home/user/claude.tar.xz -C /home/user/.claude
 RUN touch /home/project/openclaw/morning_7am_cron.sh && chmod +x /home/project/openclaw/morning_7am_cron.sh
 
 # 12. Expose ports
