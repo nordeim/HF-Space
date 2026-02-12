@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+export PATH=/home/user/.local/bin:/home/user/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/user/.linuxbrew/bin
+
 # Function to start cron service as user
 start_cron() {
     echo "Starting cron service..."
