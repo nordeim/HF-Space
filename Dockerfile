@@ -117,6 +117,7 @@ RUN mkdir -p /home/user/cron && \
     crontab -l 2>/dev/null || echo "# User cron jobs" | crontab -
 RUN ls /app/my-cron-job.txt && cat /app/my-cron-job.txt | crontab -
 RUN mkdir /home/user/.openclaw && tar -xf /app/openclaw-user.tgz -C /home/user/.openclaw
+RUN mkdir -p /home/user/.bun/install/global && cd /home/user/.bun/install/global && bun install mcporter
 
 # 12. Expose ports
 EXPOSE ${TTYD_PORT} ${APP_PORT}
