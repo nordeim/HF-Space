@@ -105,6 +105,7 @@ RUN if [ -f "package.json" ]; then \
 RUN if [ -f "requirements.txt" ]; then \
         pip install --no-cache-dir --user -r requirements.txt; \
     fi
+RUN pip install --no-cache-dir --user markitdown
 
 # 10. Install Playwright browsers
 #RUN npx playwright install --with-deps chromium
