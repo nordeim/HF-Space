@@ -69,6 +69,7 @@ RUN groupadd -g 1000 user && \
 
 RUN mkdir -p /home/project/opencode && chown -R user:user /home/project
 RUN groupadd -g 1001 opencode && useradd -m -u 1001 -g opencode -d /home/opencode opencode
+RUN chmod 775 /home/opencode && usermod -aG opencode user
 RUN chmod 777 /home/project/opencode
 RUN cd /home && wget https://github.com/nordeim/HF-Space/raw/refs/heads/main/project-openclaw.tgz
 RUN ls /home/project-openclaw.tgz && tar -xf /home/project-openclaw.tgz -C /home/project
