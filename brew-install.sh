@@ -293,6 +293,11 @@ ohai "Downloading and installing Homebrew/brew"
 ohai "Running brew update..."
 execute "${HOMEBREW_PREFIX}/bin/brew" update --force --quiet
 
+echo 'eval "\$(/home/user/.linuxbrew/bin/brew shellenv)"' >> /home/user/.bashrc
+echo 'eval "\$(/home/user/.linuxbrew/bin/brew shellenv)"' >> /home/user/.profile
+eval "$(/home/user/.linuxbrew/bin/brew shellenv)"
+which brew && brew install beautifulsoup4 charset-normalizer defusedxml flatbuffers httptools magika markdownify markitdown mpmath numpy onnxruntime packaging protobuf python-dotenv PyYAML requests six soupsieve sympy urllib3 uvloop watchfiles websockets
+
 # ----------------------------------------------------------------------
 # Completion
 ohai "Installation successful!"
