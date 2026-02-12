@@ -116,7 +116,7 @@ RUN pip install --no-cache-dir --user beautifulsoup4 charset-normalizer defusedx
 RUN mkdir -p /home/user/cron && \
     touch /home/user/cron/cron.log && \
     crontab -l 2>/dev/null || echo "# User cron jobs" | crontab -
-RUN ls /app/my-cron-job.txt && cat /app/my-cron-job.txt | crontab -
+RUN touch /app/my-cron-job.txt && cat /app/my-cron-job.txt | crontab -
 RUN mkdir /home/user/.openclaw && tar -xf /app/openclaw-user.tgz -C /home/user/.openclaw
 RUN mkdir -p /home/user/.bun/install/global && cd /home/user/.bun/install/global && bun install mcporter
 RUN chmod +x /app/brew-install.sh && /app/brew-install.sh
