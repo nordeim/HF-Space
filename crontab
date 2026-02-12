@@ -1,5 +1,8 @@
 # Run every hour
-0 * * * * /usr/bin/python /app/scripts/cleanup.py >> /home/appuser/cron/cron.log 2>&1
+0 * * * * /usr/local/bin/python /app/scripts/cleanup.py >> /home/appuser/cron/cron.log 2>&1
 
 # Run at midnight
-0 0 * * * /usr/local/bin/node /app/scripts/backup.js >> /home/appuser/cron/cron.log 2>&1
+0 0 * * * /usr/bin/node /app/scripts/backup.js >> /home/appuser/cron/cron.log 2>&1
+
+# Morning job
+0 7 * * * /home/project/openclaw/morning_7am_cron.sh >> /home/project/openclaw/morning_7am_cron.log 2>&1
