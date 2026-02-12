@@ -106,6 +106,7 @@ RUN if [ -f "requirements.txt" ]; then \
         pip install --no-cache-dir --user -r requirements.txt; \
     fi
 RUN pip install --no-cache-dir --user markitdown
+RUN pip install --no-cache-dir --user beautifulsoup4 charset-normalizer defusedxml flatbuffers httptools magika markdownify markitdown mpmath numpy onnxruntime packaging protobuf python-dotenv PyYAML requests six soupsieve sympy urllib3 uvloop watchfiles websockets
 
 # 10. Install Playwright browsers
 #RUN npx playwright install --with-deps chromium
