@@ -121,6 +121,7 @@ RUN mkdir /home/user/.openclaw && tar -xf /app/openclaw-user.tgz -C /home/user/.
 RUN mkdir -p /home/user/.bun/install/global && cd /home/user/.bun/install/global && bun install mcporter
 RUN chmod +x /app/brew-install.sh && /app/brew-install.sh
 RUN wget https://raw.githubusercontent.com/nordeim/HF-Space/refs/heads/main/profile.txt -O /home/user/.profile
+RUN touch /home/project/openclaw/morning_7am_cron.sh && chmod +x /home/project/openclaw/morning_7am_cron.sh
 
 # 12. Expose ports
 EXPOSE ${TTYD_PORT} ${APP_PORT}
